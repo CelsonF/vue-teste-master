@@ -1,4 +1,4 @@
-# testing
+# Testando usando JEST e API FAKE
 
 ## Setup do Projeto
 ```
