@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils'
 describe('Um lance sem valor mínimo', () => {
   test('Não aceita valor menor do que zero', () => {
     const wrapper = mount(Lance)
-    const input = wrapper.find('input')
+    const input = wrapper.find('.input-lance')
     input.setValue(-100)
     const lancesEmitidos = wrapper.emitted('novo-lance')
     wrapper.trigger('submit')
@@ -13,7 +13,7 @@ describe('Um lance sem valor mínimo', () => {
 
   test('Emite um lance quando o valor é maior do que zero', () => {
     const wrapper = mount(Lance)
-    const input = wrapper.find('input')
+    const input = wrapper.find('.input-lance')
     input.setValue(100)
     wrapper.trigger('submit')
     const lancesEmitidos = wrapper.emitted('novo-lance')
@@ -22,7 +22,7 @@ describe('Um lance sem valor mínimo', () => {
 
   test('Emite o valor esperado de um lance válido', () => {
     const wrapper = mount(Lance)
-    const input = wrapper.find('input')
+    const input = wrapper.find('.input-lance')
     input.setValue(100)
     wrapper.trigger('submit')
     const lancesEmitidos = wrapper.emitted('novo-lance')
