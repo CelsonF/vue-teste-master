@@ -30,3 +30,45 @@ describe('Um lance sem valor mínimo', () => {
     expect(lance).toBe(100)
   })
 })
+
+describe('Um lance com valor mínimo', () => {
+  test('Todos os lances devem possuir um valor maior do que o mínimo informado', () => {
+    const wrapper = mount(Lance, {
+      propsData: {
+        lanceMinimo: 300
+      }
+    })
+    const input = wrapper.find('.input-lance')
+    input.setValue(400)
+    wrapper.trigger('submit')
+    const lancesEmitidos = wrapper.emitted('novo-lance')
+    expect(lancesEmitidos).toHaveLength(1)
+  })
+  test('Emite um valor esperado de um lance válido', () => {
+    const wrapper = mount(Lance, {
+      propsData: {
+        lanceMinimo: 300
+      }
+    })
+    const input = wrapper.find('.input-lance')
+    input.setValue(400)
+    wrapper.trigger('submit')
+    const lancesEmitidos = wrapper.emitted('novo-lance')
+    const valorDoLance = parseInt(lancesEmitidos[0][0])
+    expect(valorDoLance).toBe(400)
+  })
+  test('Não são aceitos lances com valores menores do que o minimo informado', async () => {
+    const wrapper = mount(Lance, {
+      propsData: {
+        lanceMinimo: 300
+      }
+    })
+    const input = wrapper.find('.input-lance')
+    input.setValue(100)
+    wrapper.trigger('submit')
+    await wrapper.vm.$nextTick()
+    const msgErro = wrapper.find('p.alert').element.textContent
+    const msgEsperada = 'O valor mínimo para o lance é de R$ 300'
+    expect(msgErro).toContain(msgEsperada)
+  })
+})
